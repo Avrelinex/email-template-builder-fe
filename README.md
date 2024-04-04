@@ -17,6 +17,12 @@ $ npm run dev
 $ npm run start
 ```
 
+## Format
+
+```bash
+$ npm run format
+```
+
 ## Lint
 
 ```bash
