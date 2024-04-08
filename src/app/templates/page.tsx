@@ -21,16 +21,18 @@ export default function Page() {
   if (isError) return <div>Error</div>;
 
   return (
-    <>
-      <Box>
-        <List sx={{ width: "100%" }}>
-          {data?.map((template) => (
-            <ListItem key={template.id}>
-              <TemplateCard name={template.name} body={template.body} />
-            </ListItem>
-          ))}
-        </List>
-      </Box>
-    </>
+    <Box sx={{ w: "100%" }}>
+      <List sx={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
+        {data?.map((template) => (
+          <ListItem key={template.id} sx={{ maxWidth: "250px" }}>
+            <TemplateCard
+              name={template.name}
+              body={template.body}
+              id={template.id}
+            />
+          </ListItem>
+        ))}
+      </List>
+    </Box>
   );
 }

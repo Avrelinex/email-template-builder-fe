@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Box, Typography, TextField, Fab, Button } from "@mui/material";
+import { Box, Typography, TextField, Button, Snackbar } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getTemplateSchema } from "./schema";
@@ -9,6 +9,7 @@ import { FormValues, SubmitFormState } from "./types";
 import { Save } from "@mui/icons-material";
 import { CreateTemplateDto } from "@/app/lib/dto/CreateTemplate.dto";
 import { ApiClient } from "@/app/lib/apiClient";
+import { enqueueSnackbar } from "notistack";
 
 export default function Page() {
   const apiClient = ApiClient.getInstance();
@@ -21,7 +22,12 @@ export default function Page() {
     }
   );
 
-  const { register, handleSubmit, reset } = useForm<FormValues>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormValues>({
     mode: "onChange",
     resolver: zodResolver(getTemplateSchema()),
   });
@@ -33,25 +39,29 @@ export default function Page() {
     };
 
     try {
-      setSubmitFormState({
-        submitted: false,
-        submitting: true,
-        error: null,
-      });
+      setDisableForm(true);
 
       await apiClient.createTemplate(requestTemplateBody);
 
-      setSubmitFormState({
-        submitting: false,
-        submitted: true,
-        error: null,
+      enqueueSnackbar("Template created successfully", {
+        variant: "success",
+        persist: false,
       });
+
+      setDisableForm(false);
     } catch (error: unknown) {
       setSubmitFormState({
         submitting: false,
         submitted: false,
         error: error as Error,
       });
+
+      enqueueSnackbar("Failed to create template", {
+        variant: "error",
+        persist: false,
+      });
+    } finally {
+      setDisableForm(false);
     }
   };
 
@@ -70,18 +80,40 @@ export default function Page() {
       >
         <TextField
           label="Template name"
-          helperText="Name of your Email template"
+          error={!!errors.name}
+          helperText={
+            errors.name ? (
+              <Typography sx={{ color: "red", fontSize: "14px" }}>
+                {errors.name.message}
+              </Typography>
+            ) : (
+              "Name of your email template"
+            )
+          }
           {...register("name")}
+          disabled={disableForm}
         />
         <TextField
           label="Template body"
-          helperText="Body of your Email template"
+          helperText={
+            errors.body ? (
+              <Typography sx={{ color: "red", fontSize: "14px" }}>
+                {errors.body.message}
+              </Typography>
+            ) : (
+              "Body of your email template"
+            )
+          }
           {...register("body")}
+          multiline
+          minRows={3}
+          disabled={disableForm}
         />
         <Button
           color="primary"
           type="submit"
           disabled={disableForm}
+          variant="contained"
           startIcon={<Save />}
         >
           Save
