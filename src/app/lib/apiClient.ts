@@ -6,8 +6,7 @@ import { TemplateDto } from "./dto/Template.dto";
 export class ApiClient {
   private static instance: ApiClient;
   private axiosInstance: AxiosInstance;
-  //Idk maybe we should pass the url inside of a constructor here instead of hardcoding it
-  private static baseURL = "http://localhost:3000";
+  private static baseURL = process.env.NEXT_PUBLIC_BASE_API_URL;
 
   private constructor(baseURL: string) {
     this.axiosInstance = axios.create({
@@ -16,6 +15,10 @@ export class ApiClient {
   }
 
   static getInstance(): ApiClient {
+    if (!this.baseURL) {
+      throw new Error("Base URL is not set");
+    }
+
     if (!ApiClient.instance) {
       return new ApiClient(this.baseURL);
     }
@@ -33,7 +36,7 @@ export class ApiClient {
     }
   }
 
-  public async getTemplateByID(id: string): Promise<TemplateDto> {
+  public async getTemplateById(id: string): Promise<TemplateDto> {
     try {
       const response: AxiosResponse<TemplateDto> = await this.axiosInstance.get(
         `/templates/${id}`
