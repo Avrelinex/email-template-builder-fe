@@ -10,15 +10,15 @@ import { TemplateCard } from "./components/TemplateCard";
 export default function Page() {
   const apiClient = ApiClient.getInstance();
 
-  const { data, isLoading, isError } = useQuery<TemplateDto[], Error>({
-    queryKey: ["template"],
+  const { data, isLoading, error } = useQuery<TemplateDto[], Error>({
+    queryKey: ["templates"],
     queryFn: () => apiClient.getTemplates(),
   });
 
   if (isLoading) {
     return <div>Loading</div>;
   }
-  if (isError) return <div>Error</div>;
+  if (error) return <div>{error.message}</div>;
 
   return (
     <Box sx={{ w: "100%" }}>
