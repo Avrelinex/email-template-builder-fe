@@ -5,6 +5,7 @@ import { FormValues } from "../types";
 import { CreateTemplateDto } from "@/app/lib/dto/CreateTemplate.dto";
 import { ApiClient } from "@/app/lib/apiClient";
 import { TemplateForm } from "../components/TemplateForm";
+import { Box } from "@mui/material";
 
 export default function Page() {
   const apiClient = ApiClient.getInstance();
@@ -19,11 +20,13 @@ export default function Page() {
   };
 
   return (
-    <TemplateForm
-      header="Create a new email template"
-      successMessage="Template created successfully"
-      errorMessage="Failed to create template"
-      submitFn={onSubmit}
-    />
+    <Box sx={{ display: "flex", justifyContent: "center" }}>
+      <TemplateForm
+        header="Create a new email template"
+        successMessage="Template created successfully"
+        errorMessage="Failed to create template"
+        submitFn={onSubmit}
+      />
+    </Box>
   );
 }

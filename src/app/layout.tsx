@@ -17,12 +17,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const queryClient = new QueryClient();
-  const [collapsed, setCollpased] = React.useState<boolean>(false);
+  const [collapsed, setCollapsed] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    if (window.innerWidth < 768) {
-      setCollpased(true);
-    }
+    const handleResize = () => {
+      setCollapsed(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
@@ -39,6 +45,7 @@ export default function RootLayout({
                   display: "flex",
                   height: "100vh",
                   mr: "5rem",
+                  w: "20%",
                 }}
               >
                 <Sidebar collapsed={collapsed}>
@@ -63,7 +70,7 @@ export default function RootLayout({
                   </Menu>
                 </Sidebar>
               </Box>
-              <Box>{children}</Box>
+              <Box sx={{ width: "80%" }}>{children}</Box>
             </Box>
           </QueryClientProvider>
         </SnackbarProvider>
