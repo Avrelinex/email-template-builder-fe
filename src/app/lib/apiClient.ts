@@ -78,7 +78,7 @@ export class ApiClient {
   public async deleteTemplate(id: string): Promise<TemplateDto> {
     try {
       const response: AxiosResponse<TemplateDto> =
-        await this.axiosInstance.delete(`/template/${id}`);
+        await this.axiosInstance.delete(`/templates/${id}`);
 
       return response.data;
     } catch (error) {

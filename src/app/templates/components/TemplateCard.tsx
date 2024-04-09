@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Delete, Edit, Email } from "@mui/icons-material";
+import { Delete, Edit } from "@mui/icons-material";
+import {Dialog} from '@mui/material';
 import {
   Card,
   CardContent,
@@ -7,10 +8,11 @@ import {
   Box,
   IconButton,
   ButtonGroup,
-  Divider,
 } from "@mui/material";
 import { ApiClient } from "../../lib/apiClient";
 import Link from "next/link";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {enqueueSnackbar} from "notistack";
 
 export type TemplateCardProps = {
   id: string;
@@ -20,15 +22,35 @@ export type TemplateCardProps = {
 
 export const TemplateCard: React.FC<TemplateCardProps> = ({
   name,
-  body,
   id,
 }) => {
   const apiClient = ApiClient.getInstance();
+  const queryClient = useQueryClient();
+
+  const deleteMutation = useMutation({
+    mutationFn: () => {
+      return apiClient.deleteTemplate(id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ['templates']});
+      enqueueSnackbar("Template deleted successfully", {
+        variant: "success",
+        persist: false,
+      });
+    },
+    onError: () => {
+      enqueueSnackbar("Failed to delete template", {
+        variant: "error",
+        persist: false,
+      });
+    }
+  })
 
   const handleDeleteTemplate = async () => {
     try {
-      await apiClient.deleteTemplate(id);
-    } catch (error: unknown) {
+      await deleteMutation.mutate();
+
+    } catch (error) {
       console.error(error);
     }
   };
@@ -40,10 +62,14 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
         borderRadius: "10px",
         boxShadow: "none",
         width: "100%",
+        height: "130px",
+        display: 'flex', 
+        flexDirection: 'column',
+        alignContent: 'space-between',
       }}
     >
       <CardContent>
-        <Typography variant="h5" sx={{ ml: "8px" }}>
+        <Typography variant="h5" sx={{ ml: "8px",   overflow: 'hidden', textOverflow: 'ellipsis' }}>
           {name}
         </Typography>
         <Box sx={{ display: "flex" }}>
