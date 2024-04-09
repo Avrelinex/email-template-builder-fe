@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { Inter } from "next/font/google";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import Link from "next/link";
@@ -16,6 +17,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const queryClient = new QueryClient();
+  const [collapsed, setCollpased] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    if (window.innerWidth < 768) {
+      setCollpased(true);
+    }
+  }, []);
 
   return (
     <html lang="en">
@@ -33,7 +41,7 @@ export default function RootLayout({
                   mr: "5rem",
                 }}
               >
-                <Sidebar collapsed={false}>
+                <Sidebar collapsed={collapsed}>
                   <Menu>
                     <MenuItem
                       icon={<Home fontSize="medium" />}
