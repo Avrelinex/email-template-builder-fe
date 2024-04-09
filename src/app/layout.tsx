@@ -55,7 +55,7 @@ export default function RootLayout({
                   </Menu>
                 </Sidebar>
               </Box>
-              {children}
+              <Box>{children}</Box>
             </Box>
           </QueryClientProvider>
         </SnackbarProvider>

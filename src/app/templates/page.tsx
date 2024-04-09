@@ -6,19 +6,47 @@ import { ApiClient } from "../lib/apiClient";
 import { TemplateDto } from "../lib/dto/Template.dto";
 import { useQuery } from "@tanstack/react-query";
 import { TemplateCard } from "./components/TemplateCard";
+import { TemplateCardSkeleton } from "./components/TemplateCardSkeleton";
+import { enqueueSnackbar } from "notistack";
 
 export default function Page() {
   const apiClient = ApiClient.getInstance();
 
   const { data, isLoading, error } = useQuery<TemplateDto[], Error>({
     queryKey: ["templates"],
-    queryFn: () => apiClient.getTemplates(),
+    queryFn: async () => apiClient.getTemplates(),
   });
 
   if (isLoading) {
-    return <div>Loading</div>;
+    return (
+      <>
+        <List sx={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
+          <ListItem sx={{ maxWidth: "250px" }}>
+            <TemplateCardSkeleton />
+          </ListItem>
+          <ListItem sx={{ maxWidth: "250px" }}>
+            <TemplateCardSkeleton />
+          </ListItem>
+          <ListItem sx={{ maxWidth: "250px" }}>
+            <TemplateCardSkeleton />
+          </ListItem>
+          <ListItem sx={{ maxWidth: "250px" }}>
+            <TemplateCardSkeleton />
+          </ListItem>
+          <ListItem sx={{ maxWidth: "250px" }}>
+            <TemplateCardSkeleton />
+          </ListItem>
+        </List>
+      </>
+    );
   }
-  if (error) return <div>{error.message}</div>;
+
+  if (error) {
+    enqueueSnackbar("Failed to load templates", {
+      variant: "error",
+      persist: false,
+    });
+  }
 
   return (
     <Box sx={{ w: "100%" }}>
