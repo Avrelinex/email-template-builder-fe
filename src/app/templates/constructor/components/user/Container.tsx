@@ -1,70 +1,176 @@
 import { useNode } from "@craftjs/core";
-import { Slider } from "@mui/material";
-import { Paper, FormControl, FormLabel } from "@mui/material";
 import React from "react";
+import { TextInput } from "../common/settings/TextInput";
+import { NumberInput } from "../common/settings/NumberInput";
+import { ColorInput } from "../common/settings/ColorInput";
 
 export const Container = ({
-  background,
   padding,
+  border,
+  borderRadius,
+  backgroundColor,
+  backgroundImage,
+  justifyContent,
+  alignItems,
+  flexDirection,
+  gap,
+  alignSelf,
   children,
   ...props
 }: {
-  background: string;
+  background?: string;
   padding?: number;
+  border?: string;
+  borderRadius?: number;
+  backgroundColor?: string;
+  backgroundImage?: string;
+  justifyContent?: string;
+  alignItems?: string;
+  flexDirection?: "row" | "row-reverse" | "column" | "column-reverse";
+  gap?: number;
+  alignSelf?: string;
   children?: React.ReactNode;
 }) => {
   const {
     connectors: { connect, drag },
   } = useNode();
   return (
-    <Paper
+    <div
       {...props}
       ref={(ref: any) => connect(drag(ref))}
-      style={{ margin: "5px 0", background, padding: `${padding}px` }}
+      style={{
+        display: "flex",
+        padding: `${padding}px`,
+        border,
+        borderRadius: `${borderRadius}px`,
+        backgroundColor,
+        backgroundImage: `url(${backgroundImage})`,
+        justifyContent,
+        alignItems,
+        gap: `${gap}px`,
+        flexDirection,
+        alignSelf,
+      }}
     >
       {children}
-    </Paper>
+    </div>
   );
 };
 
 export const ContainerSettings = () => {
   const {
-    background,
-    padding,
     actions: { setProp },
+    props,
   } = useNode((node) => ({
-    background: node.data.props.background,
-    padding: node.data.props.padding,
+    props: node.data.props,
   }));
 
   return (
     <div>
-      <FormControl fullWidth={true} margin="normal" component="fieldset">
-        <FormLabel component="legend">Background</FormLabel>
-        {/* <ColorPicker
-          name="background-color"
-          value={background}
-          onChange={(color: any) => {
-            setProp((props: { background: any; }) => (props.background = color), 500);
-          }}
-        /> */}
-      </FormControl>
-      <FormControl fullWidth={true} margin="normal" component="fieldset">
-        <FormLabel component="legend">Padding</FormLabel>
-        <Slider
-          defaultValue={padding}
-          onChange={(_: Event, value: any) =>
-            setProp((props: { padding: any }) => (props.padding = value), 500)
-          }
-        />
-      </FormControl>
+      <TextInput
+        label="Background Image"
+        value={props.backgroundImage}
+        onChange={(backgroundImage) =>
+          setProp(
+            (props: { backgroundImage: string }) =>
+              (props.backgroundImage = backgroundImage)
+          )
+        }
+      />
+      <ColorInput
+        label="Background Color"
+        value={props.backgroundColor}
+        onChange={(backgroundColor) =>
+          setProp(
+            (props: { backgroundColor: string }) =>
+              (props.backgroundColor = backgroundColor)
+          )
+        }
+      />
+      <NumberInput
+        label="Padding"
+        value={props.padding}
+        onChange={(padding) =>
+          setProp((props: { padding: number }) => (props.padding = padding))
+        }
+      />
+      <TextInput
+        label="Border"
+        value={props.border}
+        onChange={(border) =>
+          setProp((props: { border: string }) => (props.border = border))
+        }
+      />
+      <NumberInput
+        label="Border Radius"
+        value={props.borderRadius}
+        onChange={(borderRadius) =>
+          setProp(
+            (props: { borderRadius: number }) =>
+              (props.borderRadius = borderRadius)
+          )
+        }
+      />
+      <TextInput
+        label="Justify Content"
+        value={props.justifyContent}
+        onChange={(justifyContent) =>
+          setProp(
+            (props: { justifyContent: string }) =>
+              (props.justifyContent = justifyContent)
+          )
+        }
+      />
+      <TextInput
+        label="Align Items"
+        value={props.alignItems}
+        onChange={(alignItems) =>
+          setProp(
+            (props: { alignItems: string }) => (props.alignItems = alignItems)
+          )
+        }
+      />
+      <TextInput
+        label="Flex Direction"
+        value={props.flexDirection}
+        onChange={(flexDirection) =>
+          setProp(
+            (props: { flexDirection: string }) =>
+              (props.flexDirection = flexDirection)
+          )
+        }
+      />
+      <NumberInput
+        label="Gap"
+        value={props.gap}
+        onChange={(gap) =>
+          setProp((props: { gap: number }) => (props.gap = gap))
+        }
+      />
+      <TextInput
+        label="Align Self"
+        value={props.alignSelf}
+        onChange={(alignSelf) =>
+          setProp(
+            (props: { alignSelf: string }) => (props.alignSelf = alignSelf)
+          )
+        }
+      />
     </div>
   );
 };
 
 export const ContainerDefaultProps = {
-  background: "#ffffff",
-  padding: 3,
+  padding: 5,
+  border: "1px solid",
+  borderRadius: 0,
+  backgroundColor: "white",
+  backgroundImage: "",
+  justifyContent: "flex-start",
+  alignItems: "stretch",
+  gap: 0,
+  flexDirection: "row",
+  alignSelf: "auto",
 };
 
 Container.craft = {

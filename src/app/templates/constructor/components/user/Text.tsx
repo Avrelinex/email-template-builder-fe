@@ -59,7 +59,7 @@ export const Text = ({
             500
           )
         }
-        style={{ 
+        style={{
           fontSize: `${fontSize}px`,
           padding: `${padding}px`,
           border,

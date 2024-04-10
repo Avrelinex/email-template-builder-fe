@@ -32,7 +32,6 @@ export const Button = ({
         ref && connect(drag(ref));
       }}
       style={{
-        margin: "5px",
         padding: `${padding}px`,
         border,
         borderRadius: `${borderRadius}px`,
@@ -57,7 +56,7 @@ export const ButtonSettings = () => {
   }));
 
   return (
-    <div>
+    <>
       <TextInput
         label="Text"
         value={props.text}
@@ -125,7 +124,7 @@ export const ButtonSettings = () => {
           )
         }
       />
-    </div>
+    </>
   );
 };
 
