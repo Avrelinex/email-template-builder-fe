@@ -1,6 +1,5 @@
 import { useNode } from "@craftjs/core";
 import { FormControl, FormLabel, TextField } from "@mui/material";
-import NextImage from "next/image";
 import { useState } from "react";
 
 export const Image = ({ src, alt }: { src?: string; alt?: string }) => {
@@ -12,13 +11,13 @@ export const Image = ({ src, alt }: { src?: string; alt?: string }) => {
       ref={(ref) => {
         ref && connect(drag(ref));
       }}
-      src={src || ""}
-      alt={alt || ""}
+      src={src}
+      alt={alt}
       style={{
-        margin: "5px",
         minWidth: "100px",
         minHeight: "100px",
-        background: "#ccc",
+        background: "#eee",
+        maxWidth: "100%",
       }}
     />
   );
@@ -76,8 +75,14 @@ export const ImageSettings = () => {
   );
 };
 
+const defaultProps = {
+  src: "",
+  alt: "",
+};
+
 Image.craft = {
   related: {
     settings: ImageSettings,
   },
+  defaultProps,
 };

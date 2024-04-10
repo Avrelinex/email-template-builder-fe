@@ -1,18 +1,49 @@
 import { useNode } from "@craftjs/core";
-import { FormControl, FormLabel, TextField } from "@mui/material";
+import { SettingInputs } from "../common/settings/SettingInputs";
+import React from "react";
 
-export const Link = ({ text, link }: { text?: string; link?: string }) => {
+export const Link = ({
+  link,
+  padding,
+  border,
+  borderRadius,
+  backgroundColor,
+  backgroundImage,
+  children,
+  ...props
+}: {
+  link?: string;
+  padding?: number;
+  border?: string;
+  borderRadius?: number;
+  backgroundColor?: string;
+  backgroundImage?: string;
+  children?: React.ReactNode;
+}) => {
   const {
     connectors: { connect, drag },
   } = useNode();
   return (
     <a
-      ref={(ref) => {
-        ref && connect(drag(ref));
+      {...props}
+      ref={(ref: any) => connect(drag(ref))}
+      style={{
+        padding: `${padding}px`,
+        border,
+        borderRadius: `${borderRadius}px`,
+        backgroundColor,
+        backgroundImage: `url(${backgroundImage})`,
+
+        cursor: "pointer",
+        textDecoration: "none",
+        backgroundSize: "contain",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
       }}
-      href={"#" + link}
+      target="_blank"
+      data-href={link}
     >
-      {text}
+      {children}
     </a>
   );
 };
@@ -25,31 +56,28 @@ export const LinkSettings = () => {
     props: node.data.props,
   }));
 
-  return (
-    <div>
-      <FormControl size="small" component="fieldset">
-        <FormLabel component="legend">Text</FormLabel>
-        <TextField
-          value={props.text}
-          onChange={(e) =>
-            setProp((props: { text: string }) => (props.text = e.target.value))
-          }
-        />
-      </FormControl>
-      <FormControl size="small" component="fieldset">
-        <FormLabel component="legend">Link</FormLabel>
-        <TextField
-          value={props.link}
-          onChange={(e) =>
-            setProp((props: { link: string }) => (props.link = e.target.value))
-          }
-        />
-      </FormControl>
-    </div>
-  );
+  const fields = [
+    { label: "Link", type: "text", key: "link" },
+    { label: "Background Image", type: "text", key: "backgroundImage" },
+    { label: "Background Color", type: "color", key: "backgroundColor" },
+    { label: "Padding", type: "number", key: "padding" },
+    { label: "Border", type: "text", key: "border" },
+    { label: "Border Radius", type: "number", key: "borderRadius" },
+  ];
+
+  return <SettingInputs setProp={setProp} props={props} fields={fields} />;
+};
+
+export const LinkDefaultProps = {
+  padding: 5,
+  border: "1px solid",
+  borderRadius: 0,
+  backgroundColor: "#bbbbbb",
+  backgroundImage: "",
 };
 
 Link.craft = {
+  props: LinkDefaultProps,
   related: {
     settings: LinkSettings,
   },

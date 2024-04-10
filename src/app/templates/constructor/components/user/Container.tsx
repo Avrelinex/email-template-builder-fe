@@ -1,8 +1,6 @@
 import { useNode } from "@craftjs/core";
 import React from "react";
-import { TextInput } from "../common/settings/TextInput";
-import { NumberInput } from "../common/settings/NumberInput";
-import { ColorInput } from "../common/settings/ColorInput";
+import { SettingInputs } from "../common/settings/SettingInputs";
 
 export const Container = ({
   padding,
@@ -64,99 +62,20 @@ export const ContainerSettings = () => {
     props: node.data.props,
   }));
 
-  return (
-    <div>
-      <TextInput
-        label="Background Image"
-        value={props.backgroundImage}
-        onChange={(backgroundImage) =>
-          setProp(
-            (props: { backgroundImage: string }) =>
-              (props.backgroundImage = backgroundImage)
-          )
-        }
-      />
-      <ColorInput
-        label="Background Color"
-        value={props.backgroundColor}
-        onChange={(backgroundColor) =>
-          setProp(
-            (props: { backgroundColor: string }) =>
-              (props.backgroundColor = backgroundColor)
-          )
-        }
-      />
-      <NumberInput
-        label="Padding"
-        value={props.padding}
-        onChange={(padding) =>
-          setProp((props: { padding: number }) => (props.padding = padding))
-        }
-      />
-      <TextInput
-        label="Border"
-        value={props.border}
-        onChange={(border) =>
-          setProp((props: { border: string }) => (props.border = border))
-        }
-      />
-      <NumberInput
-        label="Border Radius"
-        value={props.borderRadius}
-        onChange={(borderRadius) =>
-          setProp(
-            (props: { borderRadius: number }) =>
-              (props.borderRadius = borderRadius)
-          )
-        }
-      />
-      <TextInput
-        label="Justify Content"
-        value={props.justifyContent}
-        onChange={(justifyContent) =>
-          setProp(
-            (props: { justifyContent: string }) =>
-              (props.justifyContent = justifyContent)
-          )
-        }
-      />
-      <TextInput
-        label="Align Items"
-        value={props.alignItems}
-        onChange={(alignItems) =>
-          setProp(
-            (props: { alignItems: string }) => (props.alignItems = alignItems)
-          )
-        }
-      />
-      <TextInput
-        label="Flex Direction"
-        value={props.flexDirection}
-        onChange={(flexDirection) =>
-          setProp(
-            (props: { flexDirection: string }) =>
-              (props.flexDirection = flexDirection)
-          )
-        }
-      />
-      <NumberInput
-        label="Gap"
-        value={props.gap}
-        onChange={(gap) =>
-          setProp((props: { gap: number }) => (props.gap = gap))
-        }
-      />
-      <TextInput
-        label="Align Self"
-        value={props.alignSelf}
-        onChange={(alignSelf) =>
-          setProp(
-            (props: { alignSelf: string }) => (props.alignSelf = alignSelf)
-          )
-        }
-      />
-    </div>
-  );
+  const fields = [
+    { label: "Background Image", type: "text", key: "backgroundImage" },
+    { label: "Background Color", type: "color", key: "backgroundColor" },
+    { label: "Padding", type: "number", key: "padding" },
+    { label: "Border", type: "text", key: "border" },
+    { label: "Border Radius", type: "number", key: "borderRadius" },
+    { label: "Justify Content", type: "text", key: "justifyContent" },
+    { label: "Align Items", type: "text", key: "alignItems" },
+    { label: "Flex Direction", type: "text", key: "flexDirection" },
+    { label: "Gap", type: "number", key: "gap" },
+    { label: "Align Self", type: "text", key: "alignSelf" },
+  ];
+
+  return <SettingInputs setProp={setProp} props={props} fields={fields} />;
 };
 
 export const ContainerDefaultProps = {

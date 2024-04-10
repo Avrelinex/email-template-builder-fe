@@ -5,10 +5,8 @@ import React from "react";
 
 import { Container } from "./user/Container";
 import { RootContainer } from "./user/RootContainer";
-import { Button } from "./user/Button";
 import { Text } from "./user/Text";
 import { Image } from "./user/Image";
-import { ImageLink } from "./user/ImageLink";
 import { Link } from "./user/Link";
 
 export const ConstructorWrapper = ({
@@ -22,10 +20,8 @@ export const ConstructorWrapper = ({
         resolver={{
           Container,
           RootContainer,
-          Button,
           Text,
           Image,
-          ImageLink,
           Link,
         }}
       >

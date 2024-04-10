@@ -7,7 +7,6 @@ import React, { useEffect } from "react";
 import { SettingsPanel } from "./SettingsPanel";
 import { Toolbox } from "./Toolbox";
 import { Topbar } from "./Topbar";
-import { Button } from "./user/Button";
 import { Container } from "./user/Container";
 import { Text } from "./user/Text";
 import { IFrame } from "./IFrame";
@@ -22,12 +21,16 @@ export const Constructor = ({
   onSave: (data: FormValues) => void;
   templateData: FormValues;
 }) => {
-  const { actions, query } = useEditor();
+  const { query } = useEditor();
 
   const [name, setName] = React.useState<string>(templateData.name);
-  const [jsonState, setJsonState] = React.useState<string | undefined>(undefined);
+  const [jsonState, setJsonState] = React.useState<string | undefined>();
 
   useEffect(() => {
+    if (!templateData.state) {
+      return;
+    }
+
     const state = lz.decompress(lz.decodeBase64(templateData.state));
     setJsonState(state);
   }, [templateData.state]);
@@ -46,6 +49,15 @@ export const Constructor = ({
 
     const rootContainer = doc.querySelector('[data-cy="root-container"]');
     const clonedNode = rootContainer?.cloneNode(true) as HTMLElement;
+
+    const links = clonedNode.querySelectorAll("a");
+    links.forEach((link) => {
+      const dataHref = link.getAttribute("data-href");
+      if (dataHref) {
+        link.setAttribute("href", dataHref);
+        link.removeAttribute("data-href");
+      }
+    });
 
     onSave({
       state,
@@ -70,7 +82,6 @@ export const Constructor = ({
           >
             <Frame data={jsonState}>
               <Element canvas is={RootContainer}>
-                <Button text="Click me" data-cy="frame-button" />
                 <Text text="Hi world!" data-cy="frame-text" />
                 <Element canvas is={Container} data-cy="frame-container">
                   <Text text="It's me again!" data-cy="frame-container-text" />

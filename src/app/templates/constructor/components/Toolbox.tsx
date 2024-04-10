@@ -2,11 +2,9 @@ import { useEditor, Element } from "@craftjs/core";
 import { Box, Typography, Grid, Button as MaterialButton } from "@mui/material";
 import React from "react";
 
-import { Button } from "./user/Button";
 import { Container } from "./user/Container";
 import { Text } from "./user/Text";
 import { Image } from "./user/Image";
-import { ImageLink } from "./user/ImageLink";
 import { Link } from "./user/Link";
 
 export const Toolbox = () => {
@@ -24,17 +22,6 @@ export const Toolbox = () => {
         <Box pb={2}>
           <Typography>Drag to add</Typography>
         </Box>
-        <Grid container direction="column" item>
-          <MaterialButton
-            ref={(ref: any) =>
-              connectors.create(ref, <Button text="Click me" />)
-            }
-            variant="contained"
-            data-cy="toolbox-button"
-          >
-            Button
-          </MaterialButton>
-        </Grid>
         <Grid container direction="column" item>
           <MaterialButton
             ref={(ref: any) => connectors.create(ref, <Text text="Hi world" />)}
@@ -71,21 +58,17 @@ export const Toolbox = () => {
         <Grid container direction="column" item>
           <MaterialButton
             ref={(ref: any) =>
-              connectors.create(ref, <ImageLink src="" alt="" link="" />)
+              connectors.create(
+                ref,
+                <Element canvas is={Link}>
+                  <Text text="Link Text" />
+                </Element>
+              )
             }
-            variant="contained"
-            data-cy="toolbox-text-2"
-          >
-            Image Link
-          </MaterialButton>
-        </Grid>
-        <Grid container direction="column" item>
-          <MaterialButton
-            ref={(ref: any) => connectors.create(ref, <Link text="Hi world" />)}
             variant="contained"
             data-cy="toolbox-text-3"
           >
-            Link Text
+            Link
           </MaterialButton>
         </Grid>
       </Grid>
