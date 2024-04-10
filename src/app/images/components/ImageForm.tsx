@@ -113,6 +113,9 @@ export const ImageForm = ({
           />
           <FileUploadButton control={control} />
           <Button
+            sx={{
+              mt: "1rem",
+            }}
             color="primary"
             type="submit"
             disabled={disableForm}

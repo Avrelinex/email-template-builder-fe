@@ -17,7 +17,15 @@ export default function Page() {
   });
 
   if (isLoading) {
-    return <ImageCardSkeleton />;
+    return (
+      <Box>
+        <List sx={{ display: "flex" }}>
+          <ImageCardSkeleton />
+          <ImageCardSkeleton />
+          <ImageCardSkeleton />
+        </List>
+      </Box>
+    );
   }
 
   if (error) {
@@ -29,13 +37,11 @@ export default function Page() {
 
   return (
     <Box>
-      <Typography variant="h4">Images</Typography>
-      <List>
+      <List sx={{ display: "flex" }}>
         {data?.map((image) => (
           <ImageCard
             key={image.id}
             id={image.id}
-            fileName={image.fileName}
             displayName={image.displayName}
           />
         ))}

@@ -15,15 +15,10 @@ import { enqueueSnackbar } from "notistack";
 
 export type ImageCardProps = {
   id: string;
-  fileName: string;
   displayName: string;
 };
 
-export const ImageCard: React.FC<ImageCardProps> = ({
-  id,
-  fileName,
-  displayName,
-}) => {
+export const ImageCard: React.FC<ImageCardProps> = ({ id, displayName }) => {
   const apiClient = ApiClient.getInstance();
   const queryClient = useQueryClient();
 
@@ -61,21 +56,24 @@ export const ImageCard: React.FC<ImageCardProps> = ({
         borderRadius: "10px",
         boxShadow: "none",
         width: "100%",
-        height: "130px",
+        maxWidth: "300px",
+        height: "250px",
         display: "flex",
         flexDirection: "column",
         alignContent: "space-between",
+        mr: "1rem",
+        pb: "1rem",
       }}
     >
       <CardContent>
-        <Typography
-          variant="h5"
-          sx={{ ml: "8px", overflow: "hidden", textOverflow: "ellipsis" }}
-        >
-          {displayName}
-        </Typography>
-        <Box sx={{ display: "flex" }}>
-          <ButtonGroup>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography
+            variant="h5"
+            sx={{ ml: "8px", overflow: "hidden", textOverflow: "ellipsis" }}
+          >
+            {displayName}
+          </Typography>
+          <ButtonGroup sx={{ mb: "5px" }}>
             <Link href={`/images/edit/${id}`} passHref>
               <IconButton>
                 <Edit />
@@ -85,6 +83,22 @@ export const ImageCard: React.FC<ImageCardProps> = ({
               <Delete />
             </IconButton>
           </ButtonGroup>
+        </Box>
+        <Box
+          sx={{
+            height: "180px",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            overflow: "hidden",
+          }}
+        >
+          <img
+            src={`http://localhost:3000/images/${id}`}
+            alt={displayName}
+            style={{ objectFit: "contain", maxHeight: "100%" }}
+          />
         </Box>
       </CardContent>
     </Card>

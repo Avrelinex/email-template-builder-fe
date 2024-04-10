@@ -93,13 +93,14 @@ export class ApiClient {
     try {
       const formData = new FormData();
       formData.append("image", image.file);
+      formData.append("displayName", image.displayName);
 
       const response: AxiosResponse<ImageDto> = await this.axiosInstance.post(
         `/images/upload`,
-        image.file,
+        formData,
         {
           headers: {
-            contentType: "multipart/form-data",
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -121,9 +122,9 @@ export class ApiClient {
     }
   }
 
-  public async getImageById(id: string): Promise<ImageDto> {
+  public async getImageById(id: string): Promise<File> {
     try {
-      const response: AxiosResponse<ImageDto> = await this.axiosInstance.get(
+      const response: AxiosResponse<File> = await this.axiosInstance.get(
         `/images/${id}`
       );
 
