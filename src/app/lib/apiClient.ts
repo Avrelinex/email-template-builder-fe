@@ -3,6 +3,11 @@ import { CreateTemplateDto } from "./dto/CreateTemplate.dto";
 import { UpdateTemplateDto } from "./dto/UpdateTemplate.dto";
 import { TemplateDto } from "./dto/Template.dto";
 
+export interface ImageResponse {
+  id: string;
+  displayName: string;
+}
+
 export class ApiClient {
   private static instance: ApiClient;
   private axiosInstance: AxiosInstance;
@@ -83,6 +88,17 @@ export class ApiClient {
       return response.data;
     } catch (error) {
       throw new Error(`Failed to delete email template with id ${id}`);
+    }
+  }
+
+  public async getImages(): Promise<ImageResponse[]> {
+    try {
+      const response: AxiosResponse<ImageResponse[]> =
+        await this.axiosInstance.get(`/images`);
+
+      return response.data;
+    } catch (error) {
+      throw new Error("Failed to fetch images");
     }
   }
 }

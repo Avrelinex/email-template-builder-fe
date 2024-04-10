@@ -1,11 +1,13 @@
+import { ApiClient, ImageResponse } from "@/app/lib/apiClient";
 import { useNode } from "@craftjs/core";
 import { FormControl, FormLabel, TextField } from "@mui/material";
-import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 export const Image = ({ src, alt }: { src?: string; alt?: string }) => {
   const {
     connectors: { connect, drag },
   } = useNode();
+
   return (
     <img
       ref={(ref) => {
@@ -31,36 +33,57 @@ export const ImageSettings = () => {
     props: node.data.props,
   }));
 
-  const [images, setImages] = useState<string[]>([]);
+  const { data, isLoading, error } = useQuery<ImageResponse[], Error>({
+    queryKey: ["images"],
+    queryFn: () => ApiClient.getInstance().getImages(),
+  });
 
-  const fetchAllImages = async () => {
-    const res = await fetch("http://localhost:3000/images");
-    const data = await res.json();
-    setImages(
-      data.map(({ id }: { id: string }) => `http://localhost:3000/images/${id}`)
-    );
-  };
+  if (isLoading) {
+    return <div>Loading</div>;
+  }
+
+  if (error) {
+    return <div>{error.message}</div>;
+  }
 
   return (
     <div>
-      <FormControl size="small" component="fieldset">
-        <FormLabel component="legend">Fetch</FormLabel>
-        <button onClick={fetchAllImages}>Fetch Images</button>
-      </FormControl>
+      {data && (
+        <FormControl size="small" component="fieldset">
+          <FormLabel component="legend">Select from uploaded</FormLabel>
+          <select
+            value={props.src}
+            onChange={(e) =>
+              setProp((props: { src: string }) => (props.src = e.target.value))
+            }
+          >
+            <option value="" disabled hidden>
+              Select an image
+            </option>
+            {data.map((image) => (
+              <option
+                key={image.id}
+                value={`http://localhost:3000/images/${image.id}`}
+              >
+                {image.displayName}
+              </option>
+            ))}
+            {props.src && !data.find((image) => image.id === props.src) && (
+              <option value={props.src} disabled hidden>
+                Custom image
+              </option>
+            )}
+          </select>
+        </FormControl>
+      )}
       <FormControl size="small" component="fieldset">
         <FormLabel component="legend">Source</FormLabel>
-        <select
+        <TextField
           value={props.src}
           onChange={(e) =>
             setProp((props: { src: string }) => (props.src = e.target.value))
           }
-        >
-          {images.map((image) => (
-            <option key={image} value={image}>
-              {image}
-            </option>
-          ))}
-        </select>
+        />
       </FormControl>
       <FormControl size="small" component="fieldset">
         <FormLabel component="legend">Alt</FormLabel>
