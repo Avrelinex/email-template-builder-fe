@@ -2,7 +2,7 @@
 
 import { Frame, Element, useEditor } from "@craftjs/core";
 import { Paper, Grid } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { SettingsPanel } from "./SettingsPanel";
 import { Toolbox } from "./Toolbox";
@@ -13,6 +13,7 @@ import { Text } from "./user/Text";
 import { IFrame } from "./IFrame";
 import { FormValues } from "../../types";
 import lz from "lzutf8";
+import { RootContainer } from "./user/RootContainer";
 
 export const Constructor = ({
   onSave,
@@ -24,8 +25,12 @@ export const Constructor = ({
   const { actions, query } = useEditor();
 
   const [name, setName] = React.useState<string>(templateData.name);
+  const [jsonState, setJsonState] = React.useState<string | undefined>(undefined);
 
-  actions.deserialize(lz.decompress(lz.decodeBase64(templateData.state)));
+  useEffect(() => {
+    const state = lz.decompress(lz.decodeBase64(templateData.state));
+    setJsonState(state);
+  }, [templateData.state]);
 
   const handleSave = () => {
     const json = query.serialize();
@@ -39,7 +44,7 @@ export const Constructor = ({
       return;
     }
 
-    const rootContainer = doc.getElementById("root-container");
+    const rootContainer = doc.querySelector('[data-cy="root-container"]');
     const clonedNode = rootContainer?.cloneNode(true) as HTMLElement;
 
     onSave({
@@ -59,49 +64,27 @@ export const Constructor = ({
         flexDirection={"row"}
       >
         <Grid item xs display={"flex"}>
-          <IFrame id="constructor-iframe" style={{ flex: "1 1 0" }}>
-            <div id="constructor-wrapper">
-              <Frame>
-                <Element
-                  canvas
-                  is={Container}
-                  padding={5}
-                  background="#eeeeee"
-                  data-cy="root-container"
-                  id="root-container"
-                >
-                  <Button text="Click me" data-cy="frame-button" />
-                  <Text fontSize={20} text="Hi world!" data-cy="frame-text" />
-                  <Element
-                    canvas
-                    is={Container}
-                    padding={6}
-                    background="#999999"
-                    data-cy="frame-container"
-                  >
-                    <Text
-                      text="It's me again!"
-                      data-cy="frame-container-text"
-                    />
-                  </Element>
-                  <style>{`
-                    #constructor-wrapper {
-                      display: flex;
-                      flex-direction: column;
-                      justify-content: center;
-                      align-items: center;
-                      width: 100%;
-                    }
-
-                    #root-container {
-                      max-width: 600px;
-                      width: 100%;
-                      box-sizing: border-box;
-                    }
-                  `}</style>
+          <IFrame
+            id="constructor-iframe"
+            style={{ width: "600px", padding: 0, border: "none" }}
+          >
+            <Frame data={jsonState}>
+              <Element canvas is={RootContainer}>
+                <Button text="Click me" data-cy="frame-button" />
+                <Text text="Hi world!" data-cy="frame-text" />
+                <Element canvas is={Container} data-cy="frame-container">
+                  <Text text="It's me again!" data-cy="frame-container-text" />
                 </Element>
-              </Frame>
-            </div>
+              </Element>
+            </Frame>
+            <style>
+              {`
+              body {
+                margin: 0;
+                padding: 0;
+              }
+            `}
+            </style>
           </IFrame>
         </Grid>
         <Grid item xs={4}>

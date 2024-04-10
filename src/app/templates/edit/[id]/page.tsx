@@ -44,16 +44,16 @@ export default function Page({ params }: { params: { id: string } }) {
     mutate(requestTemplateBody);
   };
 
+  if (isLoading) {
+    return <div>Loading</div>;
+  }
+  if (error) return <div>{error.message}</div>;
+
   const defaultValues = {
     name: data?.name ?? "",
     body: data?.body ?? "",
     state: data?.state ?? "",
   };
-
-  if (isLoading) {
-    return <div>Loading</div>;
-  }
-  if (error) return <div>{error.message}</div>;
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>

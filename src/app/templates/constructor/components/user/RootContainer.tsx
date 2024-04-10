@@ -4,30 +4,22 @@ import { TextInput } from "../common/settings/TextInput";
 import { NumberInput } from "../common/settings/NumberInput";
 import { ColorInput } from "../common/settings/ColorInput";
 
-export const Container = ({
+export const RootContainer = ({
   padding,
-  border,
-  borderRadius,
   backgroundColor,
   backgroundImage,
   justifyContent,
   alignItems,
-  flexDirection,
   gap,
-  alignSelf,
   children,
   ...props
 }: {
   padding?: number;
-  border?: string;
-  borderRadius?: number;
   backgroundColor?: string;
   backgroundImage?: string;
   justifyContent?: string;
   alignItems?: string;
-  flexDirection?: "row" | "row-reverse" | "column" | "column-reverse";
   gap?: number;
-  alignSelf?: string;
   children?: React.ReactNode;
 }) => {
   const {
@@ -38,25 +30,27 @@ export const Container = ({
       {...props}
       ref={(ref: any) => connect(drag(ref))}
       style={{
-        display: "flex",
         padding: `${padding}px`,
-        border,
-        borderRadius: `${borderRadius}px`,
         backgroundColor,
         backgroundImage: `url(${backgroundImage})`,
         justifyContent,
         alignItems,
         gap: `${gap}px`,
-        flexDirection,
-        alignSelf,
+
+        display: "flex",
+        flexDirection: "column",
+        maxWidth: "600px",
+        width: "100%",
+        boxSizing: "border-box",
       }}
+      data-cy="root-container"
     >
       {children}
     </div>
   );
 };
 
-export const ContainerSettings = () => {
+export const RootContainerSettings = () => {
   const {
     actions: { setProp },
     props,
@@ -94,23 +88,6 @@ export const ContainerSettings = () => {
         }
       />
       <TextInput
-        label="Border"
-        value={props.border}
-        onChange={(border) =>
-          setProp((props: { border: string }) => (props.border = border))
-        }
-      />
-      <NumberInput
-        label="Border Radius"
-        value={props.borderRadius}
-        onChange={(borderRadius) =>
-          setProp(
-            (props: { borderRadius: number }) =>
-              (props.borderRadius = borderRadius)
-          )
-        }
-      />
-      <TextInput
         label="Justify Content"
         value={props.justifyContent}
         onChange={(justifyContent) =>
@@ -129,16 +106,6 @@ export const ContainerSettings = () => {
           )
         }
       />
-      <TextInput
-        label="Flex Direction"
-        value={props.flexDirection}
-        onChange={(flexDirection) =>
-          setProp(
-            (props: { flexDirection: string }) =>
-              (props.flexDirection = flexDirection)
-          )
-        }
-      />
       <NumberInput
         label="Gap"
         value={props.gap}
@@ -146,35 +113,25 @@ export const ContainerSettings = () => {
           setProp((props: { gap: number }) => (props.gap = gap))
         }
       />
-      <TextInput
-        label="Align Self"
-        value={props.alignSelf}
-        onChange={(alignSelf) =>
-          setProp(
-            (props: { alignSelf: string }) => (props.alignSelf = alignSelf)
-          )
-        }
-      />
     </div>
   );
 };
 
-export const ContainerDefaultProps = {
+export const RootContainerDefaultProps = {
   padding: 5,
-  border: "1px solid",
-  borderRadius: 0,
-  backgroundColor: "#cccccc",
+  backgroundColor: "#dddddd",
   backgroundImage: "",
   justifyContent: "flex-start",
   alignItems: "stretch",
   gap: 0,
-  flexDirection: "row",
-  alignSelf: "auto",
 };
 
-Container.craft = {
-  props: ContainerDefaultProps,
+RootContainer.craft = {
+  props: RootContainerDefaultProps,
   related: {
-    settings: ContainerSettings,
+    settings: RootContainerSettings,
+  },
+  custom: {
+    unDeleatable: true,
   },
 };

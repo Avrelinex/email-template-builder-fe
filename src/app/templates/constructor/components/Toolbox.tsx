@@ -27,7 +27,7 @@ export const Toolbox = () => {
         <Grid container direction="column" item>
           <MaterialButton
             ref={(ref: any) =>
-              connectors.create(ref, <Button text="Click me" size="small" />)
+              connectors.create(ref, <Button text="Click me" />)
             }
             variant="contained"
             data-cy="toolbox-button"
@@ -50,7 +50,7 @@ export const Toolbox = () => {
               ref &&
                 connectors.create(
                   ref,
-                  <Element canvas is={Container} padding={20} background={""} />
+                  <Element canvas is={Container} padding={20} />
                 );
             }}
             variant="contained"
