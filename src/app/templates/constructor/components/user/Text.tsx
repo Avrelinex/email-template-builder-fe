@@ -1,17 +1,26 @@
 import { useNode } from "@craftjs/core";
-import { Slider, FormControl, FormLabel } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import ContentEditable from "react-contenteditable";
+import { NumberInput } from "../common/settings/NumberInput";
+import { TextInput } from "../common/settings/TextInput";
 
 export const Text = ({
   text,
   fontSize,
-  textAlign,
+  color,
+  backgroundColor,
+  border,
+  borderRadius,
+  padding,
   ...props
 }: {
   text: string;
   fontSize?: number;
-  textAlign?: string;
+  color?: string;
+  backgroundColor?: string;
+  border?: string;
+  borderRadius?: number;
+  padding?: number;
 }) => {
   const {
     connectors: { connect, drag },
@@ -50,8 +59,14 @@ export const Text = ({
             500
           )
         }
-        tagName="p"
-        style={{ fontSize: `${fontSize}px`, textAlign }}
+        style={{ 
+          fontSize: `${fontSize}px`,
+          padding: `${padding}px`,
+          border,
+          borderRadius: `${borderRadius}px`,
+          color,
+          backgroundColor,
+        }}
       />
     </div>
   );
@@ -60,29 +75,61 @@ export const Text = ({
 const TextSettings = () => {
   const {
     actions: { setProp },
-    fontSize,
+    props,
   } = useNode((node) => ({
-    text: node.data.props.text,
-    fontSize: node.data.props.fontSize,
+    props: node.data.props,
   }));
 
   return (
     <>
-      <FormControl size="small" component="fieldset">
-        <FormLabel component="legend">Font size</FormLabel>
-        <Slider
-          value={fontSize || 7}
-          step={7}
-          min={1}
-          max={50}
-          onChange={(_: any, value: any) => {
-            setProp(
-              (props: { fontSize: any }) => (props.fontSize = value),
-              1000
-            );
-          }}
-        />
-      </FormControl>
+      <NumberInput
+        label="Font Size"
+        value={props.fontSize}
+        onChange={(fontSize) =>
+          setProp((props: { fontSize: number }) => (props.fontSize = fontSize))
+        }
+      />
+      <TextInput
+        label="Color"
+        value={props.color}
+        onChange={(color) =>
+          setProp((props: { color: string }) => (props.color = color))
+        }
+      />
+      <TextInput
+        label="Background Color"
+        value={props.backgroundColor}
+        onChange={(backgroundColor) =>
+          setProp(
+            (props: { backgroundColor: string }) =>
+              (props.backgroundColor = backgroundColor)
+          )
+        }
+      />
+      <TextInput
+        label="Border"
+        value={props.border}
+        onChange={(border) =>
+          setProp((props: { border: string }) => (props.border = border))
+        }
+      />
+      <NumberInput
+        label="Border Radius"
+        value={props.borderRadius}
+        onChange={(borderRadius) =>
+          setProp(
+            (props: { borderRadius: number }) =>
+              (props.borderRadius = borderRadius)
+          )
+        }
+      />
+      <NumberInput
+        label="Padding"
+        value={props.padding}
+        onChange={(padding) =>
+          setProp((props: { padding: number }) => (props.padding = padding))
+        }
+      />
     </>
   );
 };
@@ -90,6 +137,11 @@ const TextSettings = () => {
 export const TextDefaultProps = {
   text: "Hi",
   fontSize: 20,
+  color: "black",
+  backgroundColor: "transparent",
+  border: "none",
+  borderRadius: 0,
+  padding: 0,
 };
 
 Text.craft = {
