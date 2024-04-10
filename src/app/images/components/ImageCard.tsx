@@ -13,36 +13,40 @@ import Link from "next/link";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
 
-export type TemplateCardProps = {
+export type ImageCardProps = {
   id: string;
-  name: string;
-  body: string;
+  fileName: string;
+  displayName: string;
 };
 
-export const TemplateCard: React.FC<TemplateCardProps> = ({ name, id }) => {
+export const ImageCard: React.FC<ImageCardProps> = ({
+  id,
+  fileName,
+  displayName,
+}) => {
   const apiClient = ApiClient.getInstance();
   const queryClient = useQueryClient();
 
   const deleteMutation = useMutation({
     mutationFn: () => {
-      return apiClient.deleteTemplate(id);
+      return apiClient.deleteImage(id);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["templates"] });
-      enqueueSnackbar("Template deleted successfully", {
+      queryClient.invalidateQueries({ queryKey: ["images"] });
+      enqueueSnackbar("Image deleted successfully", {
         variant: "success",
         persist: false,
       });
     },
     onError: () => {
-      enqueueSnackbar("Failed to delete template", {
+      enqueueSnackbar("Failed to delete image", {
         variant: "error",
         persist: false,
       });
     },
   });
 
-  const handleDeleteTemplate = async () => {
+  const handleDeleteImage = async () => {
     try {
       await deleteMutation.mutate();
     } catch (error) {
@@ -68,16 +72,16 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({ name, id }) => {
           variant="h5"
           sx={{ ml: "8px", overflow: "hidden", textOverflow: "ellipsis" }}
         >
-          {name}
+          {displayName}
         </Typography>
         <Box sx={{ display: "flex" }}>
           <ButtonGroup>
-            <Link href={`/templates/edit/${id}`} passHref>
+            <Link href={`/images/edit/${id}`} passHref>
               <IconButton>
                 <Edit />
               </IconButton>
             </Link>
-            <IconButton onClick={handleDeleteTemplate}>
+            <IconButton onClick={handleDeleteImage}>
               <Delete />
             </IconButton>
           </ButtonGroup>

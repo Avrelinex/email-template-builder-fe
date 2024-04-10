@@ -1,11 +1,11 @@
 "use client";
 
-import * as React from "react";
-import { FormValues } from "../types";
-import { CreateTemplateDto } from "@/app/lib/dto/CreateTemplate.dto";
 import { ApiClient } from "@/app/lib/apiClient";
-import { TemplateForm } from "../components/TemplateForm";
+import { CreateTemplateDto } from "@/app/lib/dto/template/CreateTemplate.dto";
 import { Box } from "@mui/material";
+import * as React from "react";
+import { TemplateForm } from "../components/TemplateForm";
+import { FormValues } from "../types";
 
 export default function Page() {
   const apiClient = ApiClient.getInstance();

@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import Link from "next/link";
 import { Box } from "@mui/material";
-import { Email, Home } from "@mui/icons-material";
+import { Email, Home, Image } from "@mui/icons-material";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { SnackbarProvider } from "notistack";
 
@@ -64,6 +64,14 @@ export default function RootLayout({
                         New
                       </MenuItem>
                       <MenuItem component={<Link href={"/templates"} />}>
+                        List
+                      </MenuItem>
+                    </SubMenu>
+                    <SubMenu label="Images" icon={<Image fontSize="medium" />}>
+                      <MenuItem component={<Link href={"/images/new"} />}>
+                        New
+                      </MenuItem>
+                      <MenuItem component={<Link href={"/images"} />}>
                         List
                       </MenuItem>
                     </SubMenu>
