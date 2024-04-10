@@ -70,7 +70,7 @@ export const Constructor = ({
                   data-cy="root-container"
                   id="root-container"
                 >
-                  <Button text="Click me" size="small" data-cy="frame-button" />
+                  <Button text="Click me" data-cy="frame-button" />
                   <Text fontSize={20} text="Hi world!" data-cy="frame-text" />
                   <Element
                     canvas

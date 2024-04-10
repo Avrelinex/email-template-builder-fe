@@ -1,42 +1,50 @@
 import { useNode } from "@craftjs/core";
-import {
-  Button as MaterialButton,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  Radio,
-  FormControlLabel,
-} from "@mui/material";
 import React from "react";
+import { TextInput } from "../common/settings/TextInput";
+import { NumberInput } from "../common/settings/NumberInput";
 
 export const Button = ({
-  size,
-  variant,
-  color,
   text,
+  textColor,
+  size,
+  padding,
+  border,
+  borderRadius,
+  backgroundColor,
+  backgroundImage,
   ...props
 }: {
-  size?: "small" | "medium" | "large";
-  variant?: "text" | "outlined" | "contained";
-  color?: "primary" | "secondary";
   text: string;
+  textColor?: string;
+  size?: number;
+  padding?: number;
+  border?: string;
+  borderRadius?: number;
+  backgroundColor?: string;
+  backgroundImage?: string;
 }) => {
   const {
     connectors: { connect, drag },
   } = useNode();
   return (
-    <MaterialButton
+    <button
       ref={(ref) => {
         ref && connect(drag(ref));
       }}
-      style={{ margin: "5px" }}
-      size={size}
-      variant={variant}
-      color={color}
+      style={{
+        margin: "5px",
+        padding: `${padding}px`,
+        border,
+        borderRadius: `${borderRadius}px`,
+        backgroundColor,
+        backgroundImage: `url(${backgroundImage})`,
+        fontSize: `${size}px`,
+        color: textColor,
+      }}
       {...props}
     >
       {text}
-    </MaterialButton>
+    </button>
   );
 };
 
@@ -50,94 +58,86 @@ export const ButtonSettings = () => {
 
   return (
     <div>
-      <FormControl size="small" component="fieldset">
-        <FormLabel component="legend">Size</FormLabel>
-        <RadioGroup
-          defaultValue={props.size}
-          onChange={(e) =>
-            setProp((props: { size: string }) => (props.size = e.target.value))
-          }
-        >
-          <FormControlLabel
-            label="Small"
-            value="small"
-            control={<Radio size="small" color="primary" />}
-          />
-          <FormControlLabel
-            label="Medium"
-            value="medium"
-            control={<Radio size="small" color="primary" />}
-          />
-          <FormControlLabel
-            label="Large"
-            value="large"
-            control={<Radio size="small" color="primary" />}
-          />
-        </RadioGroup>
-      </FormControl>
-      <FormControl component="fieldset">
-        <FormLabel component="legend">Variant</FormLabel>
-        <RadioGroup
-          defaultValue={props.variant}
-          onChange={(e) =>
-            setProp(
-              (props: { variant: string }) => (props.variant = e.target.value)
-            )
-          }
-        >
-          <FormControlLabel
-            label="Text"
-            value="text"
-            control={<Radio size="small" color="primary" />}
-          />
-          <FormControlLabel
-            label="Outlined"
-            value="outlined"
-            control={<Radio size="small" color="primary" />}
-          />
-          <FormControlLabel
-            label="Contained"
-            value="contained"
-            control={<Radio size="small" color="primary" />}
-          />
-        </RadioGroup>
-      </FormControl>
-      <FormControl component="fieldset">
-        <FormLabel component="legend">Color</FormLabel>
-        <RadioGroup
-          defaultValue={props.color}
-          onChange={(e) =>
-            setProp(
-              (props: { color: string }) => (props.color = e.target.value)
-            )
-          }
-        >
-          <FormControlLabel
-            label="Default"
-            value="default"
-            control={<Radio size="small" color="default" />}
-          />
-          <FormControlLabel
-            label="Primary"
-            value="primary"
-            control={<Radio size="small" color="primary" />}
-          />
-          <FormControlLabel
-            label="Secondary"
-            value="secondary"
-            control={<Radio size="small" color="primary" />}
-          />
-        </RadioGroup>
-      </FormControl>
+      <TextInput
+        label="Text"
+        value={props.text}
+        onChange={(text) =>
+          setProp((props: { text: string }) => (props.text = text))
+        }
+      />
+      <NumberInput
+        label="Size"
+        value={props.size}
+        onChange={(size) =>
+          setProp((props: { size: number }) => (props.size = size))
+        }
+      />
+      <NumberInput
+        label="Padding"
+        value={props.padding}
+        onChange={(padding) =>
+          setProp((props: { padding: number }) => (props.padding = padding))
+        }
+      />
+      <NumberInput
+        label="Border Radius"
+        value={props.borderRadius}
+        onChange={(borderRadius) =>
+          setProp(
+            (props: { borderRadius: number }) =>
+              (props.borderRadius = borderRadius)
+          )
+        }
+      />
+      <TextInput
+        label="Background"
+        value={props.backgroundColor}
+        onChange={(backgroundColor) =>
+          setProp(
+            (props: { backgroundColor: string }) =>
+              (props.backgroundColor = backgroundColor)
+          )
+        }
+      />
+      <TextInput
+        label="Text Color"
+        value={props.textColor}
+        onChange={(textColor) =>
+          setProp(
+            (props: { textColor: string }) => (props.textColor = textColor)
+          )
+        }
+      />
+      <TextInput
+        label="Border"
+        value={props.border}
+        onChange={(border) =>
+          setProp((props: { border: string }) => (props.border = border))
+        }
+      />
+      <TextInput
+        label="Background Image"
+        value={props.backgroundImage}
+        onChange={(backgroundImage) =>
+          setProp(
+            (props: { backgroundImage: string }) =>
+              (props.backgroundImage = backgroundImage)
+          )
+        }
+      />
     </div>
   );
 };
 
 export const ButtonDefaultProps = {
-  size: "small",
-  variant: "contained",
-  color: "primary",
   text: "Click me",
+  textColor: "black",
+  size: 16,
+  padding: 8,
+  border: "solid 1px black",
+  borderRadius: 0,
+  backgroundColor: "transparent",
+  backgroundImage: "none",
 };
 
 Button.craft = {
