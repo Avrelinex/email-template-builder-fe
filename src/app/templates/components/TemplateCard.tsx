@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Delete, Edit } from "@mui/icons-material";
-import {Dialog} from '@mui/material';
+import { Dialog } from "@mui/material";
 import {
   Card,
   CardContent,
@@ -12,7 +12,7 @@ import {
 import { ApiClient } from "../../lib/apiClient";
 import Link from "next/link";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {enqueueSnackbar} from "notistack";
+import { enqueueSnackbar } from "notistack";
 
 export type TemplateCardProps = {
   id: string;
@@ -20,10 +20,7 @@ export type TemplateCardProps = {
   body: string;
 };
 
-export const TemplateCard: React.FC<TemplateCardProps> = ({
-  name,
-  id,
-}) => {
+export const TemplateCard: React.FC<TemplateCardProps> = ({ name, id }) => {
   const apiClient = ApiClient.getInstance();
   const queryClient = useQueryClient();
 
@@ -32,7 +29,7 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
       return apiClient.deleteTemplate(id);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ['templates']});
+      queryClient.invalidateQueries({ queryKey: ["templates"] });
       enqueueSnackbar("Template deleted successfully", {
         variant: "success",
         persist: false,
@@ -43,13 +40,12 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
         variant: "error",
         persist: false,
       });
-    }
-  })
+    },
+  });
 
   const handleDeleteTemplate = async () => {
     try {
       await deleteMutation.mutate();
-
     } catch (error) {
       console.error(error);
     }
@@ -63,13 +59,16 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
         boxShadow: "none",
         width: "100%",
         height: "130px",
-        display: 'flex', 
-        flexDirection: 'column',
-        alignContent: 'space-between',
+        display: "flex",
+        flexDirection: "column",
+        alignContent: "space-between",
       }}
     >
       <CardContent>
-        <Typography variant="h5" sx={{ ml: "8px",   overflow: 'hidden', textOverflow: 'ellipsis' }}>
+        <Typography
+          variant="h5"
+          sx={{ ml: "8px", overflow: "hidden", textOverflow: "ellipsis" }}
+        >
           {name}
         </Typography>
         <Box sx={{ display: "flex" }}>

@@ -1,14 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  Box,
-  Typography,
-  TextField,
-  Button,
-  Snackbar,
-  Paper,
-} from "@mui/material";
+import { Box, Typography, TextField, Button, Paper } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getTemplateSchema } from "../schema";

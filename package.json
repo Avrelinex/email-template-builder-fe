@@ -10,6 +10,7 @@
     "format": "prettier --write --ignore-path .gitignore ."
   },
   "dependencies": {
+    "@craftjs/core": "^0.2.5",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@hookform/resolvers": "^3.3.4",
@@ -18,9 +19,12 @@
     "@tanstack/react-query": "^5.29.0",
     "@types/axios": "^0.14.0",
     "axios": "^1.6.8",
+    "copy-to-clipboard": "^3.3.3",
+    "lzutf8": "^0.6.3",
     "next": "14.1.4",
     "notistack": "^3.0.1",
     "react": "^18",
+    "react-contenteditable": "^3.3.7",
     "react-dom": "^18",
     "react-hook-form": "^7.51.2",
     "react-pro-sidebar": "^1.1.0",
