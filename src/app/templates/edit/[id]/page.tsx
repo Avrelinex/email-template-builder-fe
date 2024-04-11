@@ -1,15 +1,14 @@
 "use client";
 
-import * as React from "react";
-import { FormValues } from "../../types";
 import { ApiClient } from "@/app/lib/apiClient";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { TemplateDto } from "@/app/lib/dto/Template.dto";
-import { UpdateTemplateDto } from "@/app/lib/dto/UpdateTemplate.dto";
+import { TemplateDto } from "@/app/lib/dto/template/Template.dto";
+import { UpdateTemplateDto } from "@/app/lib/dto/template/UpdateTemplate.dto";
 import { Box } from "@mui/material";
 import { Constructor } from "../../constructor/components/Constructor";
 import { enqueueSnackbar } from "notistack";
 import { ConstructorWrapper } from "../../constructor/components/ConstructorWrapper";
+import { FormValues } from "../../types";
 
 export default function Page({ params }: { params: { id: string } }) {
   const apiClient = ApiClient.getInstance();

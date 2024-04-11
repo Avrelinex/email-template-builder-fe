@@ -13,36 +13,35 @@ import Link from "next/link";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
 
-export type TemplateCardProps = {
+export type ImageCardProps = {
   id: string;
-  name: string;
-  body: string;
+  displayName: string;
 };
 
-export const TemplateCard: React.FC<TemplateCardProps> = ({ name, id }) => {
+export const ImageCard: React.FC<ImageCardProps> = ({ id, displayName }) => {
   const apiClient = ApiClient.getInstance();
   const queryClient = useQueryClient();
 
   const deleteMutation = useMutation({
     mutationFn: () => {
-      return apiClient.deleteTemplate(id);
+      return apiClient.deleteImage(id);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["templates"] });
-      enqueueSnackbar("Template deleted successfully", {
+      queryClient.invalidateQueries({ queryKey: ["images"] });
+      enqueueSnackbar("Image deleted successfully", {
         variant: "success",
         persist: false,
       });
     },
     onError: () => {
-      enqueueSnackbar("Failed to delete template", {
+      enqueueSnackbar("Failed to delete image", {
         variant: "error",
         persist: false,
       });
     },
   });
 
-  const handleDeleteTemplate = async () => {
+  const handleDeleteImage = async () => {
     try {
       await deleteMutation.mutate();
     } catch (error) {
@@ -57,30 +56,49 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({ name, id }) => {
         borderRadius: "10px",
         boxShadow: "none",
         width: "100%",
-        height: "130px",
+        maxWidth: "300px",
+        height: "250px",
         display: "flex",
         flexDirection: "column",
         alignContent: "space-between",
+        mr: "1rem",
+        pb: "1rem",
       }}
     >
       <CardContent>
-        <Typography
-          variant="h5"
-          sx={{ ml: "8px", overflow: "hidden", textOverflow: "ellipsis" }}
-        >
-          {name}
-        </Typography>
-        <Box sx={{ display: "flex" }}>
-          <ButtonGroup>
-            <Link href={`/templates/edit/${id}`} passHref>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography
+            variant="h5"
+            sx={{ ml: "8px", overflow: "hidden", textOverflow: "ellipsis" }}
+          >
+            {displayName}
+          </Typography>
+          <ButtonGroup sx={{ mb: "5px" }}>
+            <Link href={`/images/edit/${id}`} passHref>
               <IconButton>
                 <Edit />
               </IconButton>
             </Link>
-            <IconButton onClick={handleDeleteTemplate}>
+            <IconButton onClick={handleDeleteImage}>
               <Delete />
             </IconButton>
           </ButtonGroup>
+        </Box>
+        <Box
+          sx={{
+            height: "180px",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            overflow: "hidden",
+          }}
+        >
+          <img
+            src={`http://localhost:3000/images/${id}`}
+            alt={displayName}
+            style={{ objectFit: "contain", maxHeight: "100%" }}
+          />
         </Box>
       </CardContent>
     </Card>
