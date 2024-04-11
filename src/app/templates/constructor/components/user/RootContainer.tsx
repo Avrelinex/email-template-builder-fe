@@ -57,7 +57,7 @@ export const RootContainerSettings = () => {
   }));
 
   const fields = [
-    { label: "Background Image", type: "text", key: "backgroundImage" },
+    { label: "Background Image", type: "image", key: "backgroundImage" },
     { label: "Background Color", type: "color", key: "backgroundColor" },
     { label: "Padding", type: "number", key: "padding" },
     { label: "Justify Content", type: "text", key: "justifyContent" },

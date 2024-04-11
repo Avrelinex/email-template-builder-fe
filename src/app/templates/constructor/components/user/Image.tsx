@@ -1,7 +1,7 @@
 import { ApiClient, ImageResponse } from "@/app/lib/apiClient";
 import { useNode } from "@craftjs/core";
-import { FormControl, FormLabel, TextField } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import { SettingInputs } from "../common/settings/SettingInputs";
 
 export const Image = ({ src, alt }: { src?: string; alt?: string }) => {
   const {
@@ -46,56 +46,12 @@ export const ImageSettings = () => {
     return <div>{error.message}</div>;
   }
 
-  return (
-    <div>
-      {data && (
-        <FormControl size="small" component="fieldset">
-          <FormLabel component="legend">Select from uploaded</FormLabel>
-          <select
-            value={props.src}
-            onChange={(e) =>
-              setProp((props: { src: string }) => (props.src = e.target.value))
-            }
-          >
-            <option value="" disabled hidden>
-              Select an image
-            </option>
-            {data.map((image) => (
-              <option
-                key={image.id}
-                value={`http://localhost:3000/images/${image.id}`}
-              >
-                {image.displayName}
-              </option>
-            ))}
-            {props.src && !data.find((image) => image.id === props.src) && (
-              <option value={props.src} disabled hidden>
-                Custom image
-              </option>
-            )}
-          </select>
-        </FormControl>
-      )}
-      <FormControl size="small" component="fieldset">
-        <FormLabel component="legend">Source</FormLabel>
-        <TextField
-          value={props.src}
-          onChange={(e) =>
-            setProp((props: { src: string }) => (props.src = e.target.value))
-          }
-        />
-      </FormControl>
-      <FormControl size="small" component="fieldset">
-        <FormLabel component="legend">Alt</FormLabel>
-        <TextField
-          value={props.alt}
-          onChange={(e) =>
-            setProp((props: { alt: string }) => (props.alt = e.target.value))
-          }
-        />
-      </FormControl>
-    </div>
-  );
+  const fields = [
+    { label: "Source", type: "image", key: "src" },
+    { label: "Alt", type: "text", key: "alt" },
+  ];
+
+  return <SettingInputs fields={fields} props={props} setProp={setProp} />;
 };
 
 const defaultProps = {

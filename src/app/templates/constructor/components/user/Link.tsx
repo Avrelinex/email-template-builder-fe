@@ -58,7 +58,7 @@ export const LinkSettings = () => {
 
   const fields = [
     { label: "Link", type: "text", key: "link" },
-    { label: "Background Image", type: "text", key: "backgroundImage" },
+    { label: "Background Image", type: "image", key: "backgroundImage" },
     { label: "Background Color", type: "color", key: "backgroundColor" },
     { label: "Padding", type: "number", key: "padding" },
     { label: "Border", type: "text", key: "border" },

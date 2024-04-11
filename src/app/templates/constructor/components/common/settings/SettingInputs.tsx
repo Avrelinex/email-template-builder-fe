@@ -1,4 +1,5 @@
 import { ColorInput } from "./ColorInput";
+import { ImageInput } from "./ImageInput";
 import { NumberInput } from "./NumberInput";
 import { TextInput } from "./TextInput";
 
@@ -61,6 +62,21 @@ export const SettingInputs = ({
                 }
               />
             );
+          case "image":
+            return (
+              <ImageInput
+                key={field.key}
+                label={field.label}
+                value={props[field.key]}
+                onChange={(value) =>
+                  setProp(
+                    (props: { [key: string]: string }) =>
+                      (props[field.key] = value)
+                  )
+                }
+              />
+            );
+
           default:
             return null;
         }
