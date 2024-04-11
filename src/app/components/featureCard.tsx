@@ -41,7 +41,7 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
           <Typography variant="h5" sx={{ mb: "1rem" }}>
             {label}
           </Typography>
-          <Typography sx={{ fontSize: "14px", mb: "1rem" }}>
+          <Typography sx={{ fontSize: "14px", height: "3rem", mb: "1rem" }}>
             {description}
           </Typography>
           <CardActions>

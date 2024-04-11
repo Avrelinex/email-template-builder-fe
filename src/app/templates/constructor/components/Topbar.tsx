@@ -54,17 +54,24 @@ export const Topbar = ({
             color="secondary"
             disabled={!canUndo}
             onClick={() => actions.history.undo()}
-            style={{ marginRight: "10px" }}
+            style={{
+              marginRight: "10px",
+              fontWeight: "bold",
+              border: "2px solid",
+            }}
           >
             Undo
           </MaterialButton>
           <MaterialButton
             size="small"
             variant="outlined"
-            color="secondary"
             disabled={!canRedo}
             onClick={() => actions.history.redo()}
-            style={{ marginRight: "10px" }}
+            style={{
+              marginRight: "10px",
+              fontWeight: "bold",
+              border: "2px solid",
+            }}
           >
             Redo
           </MaterialButton>
@@ -75,7 +82,11 @@ export const Topbar = ({
             variant="outlined"
             color="secondary"
             onClick={onSave}
-            style={{ marginRight: "10px" }}
+            style={{
+              marginRight: "10px",
+              fontWeight: "bold",
+              border: "2px solid",
+            }}
           >
             Save
           </MaterialButton>
