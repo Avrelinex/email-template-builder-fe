@@ -26,7 +26,7 @@ export default function Page() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["templates"] });
       enqueueSnackbar("Template created successfully", { variant: "success" });
-      router.push("/images");
+      router.push("/templates");
     },
   });
 
