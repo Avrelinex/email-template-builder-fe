@@ -75,7 +75,7 @@ export const ImageCard: React.FC<ImageCardProps> = ({ id, displayName }) => {
             {displayName}
           </Typography>
           <ButtonGroup sx={{ mb: "5px" }}>
-            <Link href={`/images/edit/${id}`} passHref>
+            <Link href={`/images/${id}/edit`} passHref>
               <IconButton>
                 <Edit />
               </IconButton>

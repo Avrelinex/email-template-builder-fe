@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Delete, Download, Edit } from "@mui/icons-material";
+import { Delete, Download, Edit, Preview } from "@mui/icons-material";
 import {
   Card,
   CardContent,
@@ -86,7 +86,7 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({ name, id }) => {
         </Typography>
         <Box sx={{ display: "flex" }}>
           <ButtonGroup>
-            <Link href={`/templates/edit/${id}`} passHref>
+            <Link href={`/templates/${id}/edit`} passHref>
               <IconButton>
                 <Edit />
               </IconButton>
@@ -97,6 +97,11 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({ name, id }) => {
             <IconButton onClick={downloadEml}>
               <Download />
             </IconButton>
+            <Link href={`/templates/${id}/preview`} passHref>
+              <IconButton>
+                <Preview />
+              </IconButton>
+            </Link>
           </ButtonGroup>
         </Box>
       </CardContent>
