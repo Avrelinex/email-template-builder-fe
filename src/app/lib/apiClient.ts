@@ -94,6 +94,21 @@ export class ApiClient {
     }
   }
 
+  public async downloadEml(id: string): Promise<AxiosResponse<Blob>> {
+    try {
+      const response: AxiosResponse<Blob> = await this.axiosInstance.post(
+        `/email-generator/template/${id}`,
+        {
+          responseType: "blob",
+        }
+      );
+
+      return response;
+    } catch (error) {
+      throw new Error(`Failed to download email template with id ${id}`);
+    }
+  }
+
   public async createImage(image: CreateImageDto): Promise<ImageDto> {
     try {
       const formData = new FormData();

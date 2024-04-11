@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Delete, Edit } from "@mui/icons-material";
+import { Delete, Download, Edit } from "@mui/icons-material";
 import {
   Card,
   CardContent,
@@ -50,6 +50,20 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({ name, id }) => {
     }
   };
 
+  const downloadEml = async () => {
+    try {
+      const response = await apiClient.downloadEml(id);
+      const blob = new Blob([response.data], { type: "message/rfc822" });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${name}.eml`;
+      a.click();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Card
       sx={{
@@ -79,6 +93,9 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({ name, id }) => {
             </Link>
             <IconButton onClick={handleDeleteTemplate}>
               <Delete />
+            </IconButton>
+            <IconButton onClick={downloadEml}>
+              <Download />
             </IconButton>
           </ButtonGroup>
         </Box>
