@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Box, Typography, List } from "@mui/material";
+import { Box, List } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { ApiClient } from "../lib/apiClient";
 import { ImageCardSkeleton } from "./components/ImageCardSkeleton";

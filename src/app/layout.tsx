@@ -52,7 +52,7 @@ export default function RootLayout({
                   <Menu>
                     <MenuItem
                       icon={<Home fontSize="medium" />}
-                      component={<Link href={"/dashboard"} />}
+                      component={<Link href={"/"} />}
                     >
                       Home
                     </MenuItem>

@@ -11,7 +11,6 @@ export default function Page() {
   const apiClient = ApiClient.getInstance();
 
   const onSubmit = async (formData: CreateFormValues) => {
-    console.log(formData.file);
     const requestImageBody: CreateImageDto = {
       displayName: formData.displayName,
       file: formData.file,
