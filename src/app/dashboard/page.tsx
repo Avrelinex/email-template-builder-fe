@@ -21,10 +21,10 @@ export default function Page() {
         />
         <FeatureCard
           Icon={Send}
-          link="campaigns/new"
-          label="Email campaign"
-          description="Reach your target audience with ease and speed like never before"
-          buttonText="Create new campaign"
+          link="images/new"
+          label="Upload images"
+          description="Upload images to use in your email templates"
+          buttonText="Upload new image"
         />
       </Box>
     </Box>

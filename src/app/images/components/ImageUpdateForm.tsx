@@ -1,35 +1,27 @@
 "use client";
 
 import * as React from "react";
-import {
-  Box,
-  Typography,
-  TextField,
-  Button,
-  Snackbar,
-  Paper,
-} from "@mui/material";
+import { Box, Typography, TextField, Button, Paper } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getImageSchema } from "../schema";
-import { FormValues, SubmitFormState } from "../types";
+import { getUpdateImageSchema } from "../schema";
+import { UpdateFormValues, SubmitFormState } from "../types";
 import { Save } from "@mui/icons-material";
 import { enqueueSnackbar } from "notistack";
 import { useRouter } from "next/navigation";
-import { FileUploadButton } from "./FileUploadButton";
 
-export const ImageForm = ({
+export const ImageUpdateForm = ({
   defaultValues,
   header,
   successMessage,
   errorMessage,
   submitFn,
 }: {
-  defaultValues?: FormValues;
+  defaultValues?: UpdateFormValues;
   header: string;
   successMessage: string;
   errorMessage: string;
-  submitFn: (data: FormValues) => Promise<void>;
+  submitFn: (data: UpdateFormValues) => Promise<void>;
 }) => {
   const router = useRouter();
   const [disableForm, setDisableForm] = React.useState<boolean>(false);
@@ -44,16 +36,16 @@ export const ImageForm = ({
   const {
     register,
     handleSubmit,
-    reset,
-    control,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm<UpdateFormValues>({
     mode: "onChange",
-    resolver: zodResolver(getImageSchema()),
+    resolver: zodResolver(getUpdateImageSchema()),
     defaultValues,
   });
 
-  const onSubmit: SubmitHandler<FormValues> = async (formData: FormValues) => {
+  const onSubmit: SubmitHandler<UpdateFormValues> = async (
+    formData: UpdateFormValues
+  ) => {
     try {
       setDisableForm(true);
 
@@ -96,22 +88,17 @@ export const ImageForm = ({
           }}
         >
           <TextField
-            label="Template name"
+            label="Display name"
             error={!!errors.displayName}
             helperText={
-              errors.displayName ? (
-                <Typography sx={{ color: "red", fontSize: "14px" }}>
-                  {errors.displayName.message}
-                </Typography>
-              ) : (
-                "Name of your email template"
-              )
+              errors.displayName
+                ? errors.displayName.message
+                : "Name of your image"
             }
             {...register("displayName")}
             disabled={disableForm}
             sx={{ mb: "1rem" }}
           />
-          <FileUploadButton control={control} />
           <Button
             sx={{
               mt: "1rem",

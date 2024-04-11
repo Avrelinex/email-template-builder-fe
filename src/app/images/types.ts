@@ -1,6 +1,10 @@
-export type FormValues = {
+export type CreateFormValues = {
   displayName: string;
-  image: File;
+  file: File;
+};
+
+export type UpdateFormValues = {
+  displayName: string;
 };
 
 export type SubmitFormState = {

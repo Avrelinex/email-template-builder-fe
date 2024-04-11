@@ -92,7 +92,7 @@ export class ApiClient {
   public async createImage(image: CreateImageDto): Promise<ImageDto> {
     try {
       const formData = new FormData();
-      formData.append("image", image.file);
+      formData.append("file", image.file);
       formData.append("displayName", image.displayName);
 
       const response: AxiosResponse<ImageDto> = await this.axiosInstance.post(
@@ -122,10 +122,10 @@ export class ApiClient {
     }
   }
 
-  public async getImageById(id: string): Promise<File> {
+  public async getImageById(id: string): Promise<ImageDto> {
     try {
-      const response: AxiosResponse<File> = await this.axiosInstance.get(
-        `/images/${id}`
+      const response: AxiosResponse<ImageDto> = await this.axiosInstance.get(
+        `/images/${id}/info`
       );
 
       return response.data;
@@ -138,7 +138,7 @@ export class ApiClient {
     image: UpdateImageDto
   ): Promise<ImageDto> {
     try {
-      const response: AxiosResponse<ImageDto> = await this.axiosInstance.patch(
+      const response: AxiosResponse<ImageDto> = await this.axiosInstance.put(
         `/images/${id}`,
         image
       );

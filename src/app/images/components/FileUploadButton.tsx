@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Controller, Control } from "react-hook-form";
-import { FormValues } from "../types";
+import { CreateFormValues } from "../types";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -18,7 +18,7 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 export type FileUploadButtonProps = {
-  control: Control<FormValues, any>;
+  control: Control<CreateFormValues, any>;
 };
 
 export const FileUploadButton: React.FC<FileUploadButtonProps> = ({
@@ -26,27 +26,30 @@ export const FileUploadButton: React.FC<FileUploadButtonProps> = ({
 }) => {
   return (
     <Controller
-      name="image"
+      name="file"
       control={control}
       defaultValue={undefined}
       render={({ field }) => (
-        <Button
-          component="label"
-          role={undefined}
-          variant="contained"
-          tabIndex={-1}
-          startIcon={<CloudUploadIcon />}
-        >
-          Upload file
-          <VisuallyHiddenInput
-            type="file"
-            onChange={(e) => {
-              if (e.target.files) {
-                field.onChange(e.target.files[0]);
-              }
-            }}
-          />
-        </Button>
+        <>
+          <Button
+            component="label"
+            role={undefined}
+            variant="contained"
+            tabIndex={-1}
+            startIcon={<CloudUploadIcon />}
+          >
+            Upload file
+            <VisuallyHiddenInput
+              type="file"
+              onChange={(e) => {
+                if (e.target.files) {
+                  field.onChange(e.target.files[0]);
+                }
+              }}
+            />
+          </Button>
+          <span>{field.value?.name || "No file selected"}</span>
+        </>
       )}
     ></Controller>
   );
