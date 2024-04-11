@@ -6,6 +6,11 @@ import { TemplateDto } from "./dto/template/Template.dto";
 import { UpdateTemplateDto } from "./dto/template/UpdateTemplate.dto";
 import { UpdateImageDto } from "./dto/image/UpdateImage.dto";
 
+export interface ImageResponse {
+  id: string;
+  displayName: string;
+}
+
 export class ApiClient {
   private static instance: ApiClient;
   private axiosInstance: AxiosInstance;
@@ -86,6 +91,21 @@ export class ApiClient {
       return response.data;
     } catch (error) {
       throw new Error(`Failed to delete email template with id ${id}`);
+    }
+  }
+
+  public async downloadEml(id: string): Promise<AxiosResponse<Blob>> {
+    try {
+      const response: AxiosResponse<Blob> = await this.axiosInstance.post(
+        `/email-generator/template/${id}`,
+        {
+          responseType: "blob",
+        }
+      );
+
+      return response;
+    } catch (error) {
+      throw new Error(`Failed to download email template with id ${id}`);
     }
   }
 
