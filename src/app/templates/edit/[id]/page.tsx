@@ -9,11 +9,12 @@ import { Constructor } from "../../constructor/components/Constructor";
 import { enqueueSnackbar } from "notistack";
 import { ConstructorWrapper } from "../../constructor/components/ConstructorWrapper";
 import { FormValues } from "../../types";
+import { useRouter } from "next/navigation";
 
 export default function Page({ params }: { params: { id: string } }) {
   const apiClient = ApiClient.getInstance();
-
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const { data, isLoading, error } = useQuery<TemplateDto, Error>({
     queryKey: ["templates", params.id],
@@ -30,6 +31,7 @@ export default function Page({ params }: { params: { id: string } }) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["templates", params.id] });
       enqueueSnackbar("Template updated successfully", { variant: "success" });
+      router.push("/templates");
     },
   });
 
