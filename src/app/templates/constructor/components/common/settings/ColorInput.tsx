@@ -10,11 +10,32 @@ export const ColorInput = ({
   return (
     <div>
       <label>{label}</label>
-      <input
-        type="color"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "8px",
+          padding: "4px 8px",
+        }}
+      >
+        <label>
+          Transparent
+          <input
+            type="checkbox"
+            checked={value === "transparent"}
+            onChange={(e) =>
+              onChange(e.target.checked ? "transparent" : "#ffffff")
+            }
+          />
+        </label>
+        {value !== "transparent" && (
+          <input
+            type="color"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+          />
+        )}
+      </div>
     </div>
   );
 };
