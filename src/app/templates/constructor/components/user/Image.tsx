@@ -31,7 +31,6 @@ export const Image = ({
         height: `${height}px`,
         background: "#eee",
         maxWidth: "100%",
-        filter: "invert(0)",
       }}
     />
   );
