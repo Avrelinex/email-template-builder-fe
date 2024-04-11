@@ -2,6 +2,14 @@ import { useEditor, Element } from "@craftjs/core";
 import { Box, Typography, Grid, Button as MaterialButton } from "@mui/material";
 import React from "react";
 
+import TextFieldsIcon from "@mui/icons-material/TextFields";
+import Crop54Icon from "@mui/icons-material/Crop54";
+import ImageIcon from "@mui/icons-material/Image";
+import LinkIcon from "@mui/icons-material/Link";
+import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+
 import { Container } from "./user/Container";
 import { Text } from "./user/Text";
 import { Image } from "./user/Image";
@@ -14,27 +22,24 @@ export const Toolbox = () => {
   const { connectors } = useEditor();
 
   return (
-    <Box px={2} py={2}>
-      <Grid
-        container
-        direction="column"
-        alignItems="center"
-        justifyContent="center"
-        spacing={1}
-      >
-        <Box pb={2}>
-          <Typography>Drag to add</Typography>
-        </Box>
-        <Grid container direction="column" item>
+    <Box px={2} py={2} border="1px solid black" borderRadius="0.3rem">
+      <Grid container direction="row" spacing={1}>
+        <Grid direction="column" container item>
+          <Box pb={2}>
+            <Typography style={{ fontWeight: "bold" }}>Drag to add</Typography>
+          </Box>
+        </Grid>
+        <Grid direction="column" item>
           <MaterialButton
             ref={(ref: any) => connectors.create(ref, <Text text="Hi world" />)}
             variant="contained"
+            style={{ backgroundColor: "black", width: "fit-content" }}
             data-cy="toolbox-text"
           >
-            Text
+            <TextFieldsIcon />
           </MaterialButton>
         </Grid>
-        <Grid container direction="column" item>
+        <Grid direction="column" item>
           <MaterialButton
             ref={(ref: any) => {
               ref &&
@@ -44,21 +49,23 @@ export const Toolbox = () => {
                 );
             }}
             variant="contained"
+            style={{ backgroundColor: "black", width: "fit-content" }}
             data-cy="toolbox-container"
           >
-            Container
+            <Crop54Icon />
           </MaterialButton>
         </Grid>
-        <Grid container direction="column" item>
+        <Grid direction="column" item>
           <MaterialButton
             ref={(ref: any) => connectors.create(ref, <Image alt="" />)}
             variant="contained"
+            style={{ backgroundColor: "black", width: "fit-content" }}
             data-cy="toolbox-text-1"
           >
-            Image
+            <ImageIcon />
           </MaterialButton>
         </Grid>
-        <Grid container direction="column" item>
+        <Grid direction="column" item>
           <MaterialButton
             ref={(ref: any) =>
               connectors.create(
@@ -69,36 +76,43 @@ export const Toolbox = () => {
               )
             }
             variant="contained"
+            style={{ backgroundColor: "black", width: "fit-content" }}
             data-cy="toolbox-text-3"
           >
-            Link
+            <LinkIcon />
           </MaterialButton>
         </Grid>
-        <Grid container direction="column" item>
+        <Grid direction="column" item>
           <MaterialButton
             ref={(ref: any) => connectors.create(ref, <Signature />)}
             variant="contained"
+            style={{ backgroundColor: "black", width: "fit-content" }}
             data-cy="toolbox-text-4"
           >
-            Signature
+            <HistoryEduIcon />
           </MaterialButton>
         </Grid>
-        <Grid container direction="column" item>
+        <Grid direction="column" item>
           <MaterialButton
             ref={(ref: any) => connectors.create(ref, <LinkSection />)}
             variant="contained"
+            style={{ backgroundColor: "black", width: "fit-content" }}
             data-cy="toolbox-text-5"
           >
-            Link Section
+            <LinkIcon />
+            <LinkIcon />
+            <LinkIcon />
           </MaterialButton>
         </Grid>
-        <Grid container direction="column" item>
+        <Grid direction="column" item>
           <MaterialButton
             ref={(ref: any) => connectors.create(ref, <SocialMediaLinks />)}
             variant="contained"
+            style={{ backgroundColor: "black", width: "fit-content" }}
             data-cy="toolbox-text-6"
           >
-            Social Media Links
+            <InstagramIcon />
+            <LinkedInIcon />
           </MaterialButton>
         </Grid>
       </Grid>
