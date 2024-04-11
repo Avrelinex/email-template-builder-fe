@@ -25,6 +25,7 @@ export const Constructor = ({
 
   const [name, setName] = React.useState<string>(templateData.name);
   const [jsonState, setJsonState] = React.useState<string | undefined>();
+  const [darkMode, setDarkMode] = React.useState<boolean>(false);
 
   useEffect(() => {
     if (!templateData.state) {
@@ -68,7 +69,14 @@ export const Constructor = ({
 
   return (
     <>
-      <Topbar onSave={handleSave} name={name} setName={setName} />
+      <Topbar
+        onSave={handleSave}
+        name={name}
+        setName={setName}
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+        iframeId={"constructor-iframe"}
+      />
       <Grid
         container
         spacing={5}
@@ -78,7 +86,7 @@ export const Constructor = ({
         <Grid item xs display={"flex"}>
           <IFrame
             id="constructor-iframe"
-            style={{ width: "600px", padding: 0, border: "none" }}
+            style={{ width: "616px", border: "none" }}
           >
             <Frame data={jsonState}>
               <Element canvas is={RootContainer}>
@@ -88,14 +96,6 @@ export const Constructor = ({
                 </Element>
               </Element>
             </Frame>
-            <style>
-              {`
-              body {
-                margin: 0;
-                padding: 0;
-              }
-            `}
-            </style>
           </IFrame>
         </Grid>
         <Grid item xs={4}>
