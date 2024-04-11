@@ -1,9 +1,14 @@
 import { useEditor } from "@craftjs/core";
-import { Box, Grid, Button as MaterialButton, TextField } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Button as MaterialButton,
+  TextField,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@mui/material";
 import React from "react";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { LightMode, DarkMode } from "@mui/icons-material";
 
 export const Topbar = ({
   name,
@@ -53,10 +58,10 @@ export const Topbar = ({
             style={{ marginRight: "10px" }}
           >
             <ToggleButton value={false} aria-label="light mode">
-              <Brightness7Icon />
+              <LightMode />
             </ToggleButton>
             <ToggleButton value={true} aria-label="dark mode">
-              <Brightness4Icon />
+              <DarkMode />
             </ToggleButton>
           </ToggleButtonGroup>
         </Grid>
