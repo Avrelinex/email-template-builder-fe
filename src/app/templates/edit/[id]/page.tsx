@@ -48,16 +48,14 @@ export default function Page({ params }: { params: { id: string } }) {
   }
   if (error) return <div>{error.message}</div>;
 
-  const defaultValues = {
-    name: data?.name ?? "",
-    body: data?.body ?? "",
-    state: data?.state ?? "",
-  };
+  if (!data) {
+    return <div>Template not found</div>;
+  }
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
       <ConstructorWrapper>
-        <Constructor onSave={onSave} templateData={defaultValues} />
+        <Constructor onSave={onSave} templateData={data} />
       </ConstructorWrapper>
     </Box>
   );

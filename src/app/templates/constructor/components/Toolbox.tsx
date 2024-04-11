@@ -6,6 +6,9 @@ import { Container } from "./user/Container";
 import { Text } from "./user/Text";
 import { Image } from "./user/Image";
 import { Link } from "./user/Link";
+import { Signature } from "./user/Signature";
+import { LinkSection } from "./user/LinkSection";
+import { SocialMediaLinks } from "./user/SocialMediaLinks";
 
 export const Toolbox = () => {
   const { connectors } = useEditor();
@@ -69,6 +72,33 @@ export const Toolbox = () => {
             data-cy="toolbox-text-3"
           >
             Link
+          </MaterialButton>
+        </Grid>
+        <Grid container direction="column" item>
+          <MaterialButton
+            ref={(ref: any) => connectors.create(ref, <Signature />)}
+            variant="contained"
+            data-cy="toolbox-text-4"
+          >
+            Signature
+          </MaterialButton>
+        </Grid>
+        <Grid container direction="column" item>
+          <MaterialButton
+            ref={(ref: any) => connectors.create(ref, <LinkSection />)}
+            variant="contained"
+            data-cy="toolbox-text-5"
+          >
+            Link Section
+          </MaterialButton>
+        </Grid>
+        <Grid container direction="column" item>
+          <MaterialButton
+            ref={(ref: any) => connectors.create(ref, <SocialMediaLinks />)}
+            variant="contained"
+            data-cy="toolbox-text-6"
+          >
+            Social Media Links
           </MaterialButton>
         </Grid>
       </Grid>

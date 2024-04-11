@@ -8,6 +8,9 @@ import { RootContainer } from "./user/RootContainer";
 import { Text } from "./user/Text";
 import { Image } from "./user/Image";
 import { Link } from "./user/Link";
+import { Signature } from "./user/Signature";
+import { LinkSection } from "./user/LinkSection";
+import { SocialMediaLinks } from "./user/SocialMediaLinks";
 
 export const ConstructorWrapper = ({
   children,
@@ -23,6 +26,9 @@ export const ConstructorWrapper = ({
           Text,
           Image,
           Link,
+          Signature,
+          LinkSection,
+          SocialMediaLinks,
         }}
       >
         {children}

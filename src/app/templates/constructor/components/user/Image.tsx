@@ -1,9 +1,20 @@
+/* eslint-disable @next/next/no-img-element */
 import { ApiClient, ImageResponse } from "@/app/lib/apiClient";
 import { useNode } from "@craftjs/core";
 import { useQuery } from "@tanstack/react-query";
 import { SettingInputs } from "../common/settings/SettingInputs";
 
-export const Image = ({ src, alt }: { src?: string; alt?: string }) => {
+export const Image = ({
+  src,
+  alt,
+  width,
+  height,
+}: {
+  src?: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+}) => {
   const {
     connectors: { connect, drag },
   } = useNode();
@@ -16,10 +27,11 @@ export const Image = ({ src, alt }: { src?: string; alt?: string }) => {
       src={src}
       alt={alt}
       style={{
-        minWidth: "100px",
-        minHeight: "100px",
+        width: `${width}px`,
+        height: `${height}px`,
         background: "#eee",
         maxWidth: "100%",
+        filter: "invert(0)",
       }}
     />
   );
@@ -49,6 +61,8 @@ export const ImageSettings = () => {
   const fields = [
     { label: "Source", type: "image", key: "src" },
     { label: "Alt", type: "text", key: "alt" },
+    { label: "Width", type: "number", key: "width" },
+    { label: "Height", type: "number", key: "height" },
   ];
 
   return <SettingInputs fields={fields} props={props} setProp={setProp} />;
@@ -57,6 +71,8 @@ export const ImageSettings = () => {
 const defaultProps = {
   src: "",
   alt: "",
+  width: 100,
+  height: 100,
 };
 
 Image.craft = {
