@@ -1,13 +1,13 @@
 "use client";
 
-import * as React from "react";
 import { Box, List, ListItem, Typography } from "@mui/material";
-import { ApiClient } from "../lib/apiClient";
-import { TemplateDto } from "../lib/dto/Template.dto";
 import { useQuery } from "@tanstack/react-query";
+import { enqueueSnackbar } from "notistack";
+import * as React from "react";
+import { ApiClient } from "../lib/apiClient";
+import { TemplateDto } from "../lib/dto/template/Template.dto";
 import { TemplateCard } from "./components/TemplateCard";
 import { TemplateCardSkeleton } from "./components/TemplateCardSkeleton";
-import { enqueueSnackbar } from "notistack";
 
 export default function Page() {
   const apiClient = ApiClient.getInstance();
