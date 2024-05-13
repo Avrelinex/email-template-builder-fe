@@ -6,15 +6,7 @@ import { Controller, Control } from "react-hook-form";
 import { CreateFormValues } from "../types";
 
 const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
+  display: "none",
 });
 
 export type FileUploadButtonProps = {
@@ -37,9 +29,11 @@ export const FileUploadButton: React.FC<FileUploadButtonProps> = ({
             variant="contained"
             tabIndex={-1}
             startIcon={<CloudUploadIcon />}
+            htmlFor="upload-file"
           >
             Upload file
             <VisuallyHiddenInput
+              id="upload-file"
               type="file"
               onChange={(e) => {
                 if (e.target.files) {
